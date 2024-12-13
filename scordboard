@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Scoreboard</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background: url('https://example.com/cartoon-sports-bg.jpg') no-repeat center center;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .team {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            width: 220px;
+            text-align: center;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        .team:hover {
+            transform: scale(1.05);
+        }
+        .team.yellow {
+            background-color: #ffffd1;
+            border: 4px solid #ffec3d;
+        }
+        .team.green {
+            background-color: #d1ffd1;
+            border: 4px solid #57e85d;
+        }
+        .team h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+        .score {
+            font-size: 56px;
+            margin: 20px 0;
+            color: #444;
+        }
+        .sets {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #555;
+        }
+        .add-button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .add-button.yellow {
+            background-color: #ffec3d;
+            color: #000;
+        }
+        .add-button.green {
+            background-color: #57e85d;
+            color: #000;
+        }
+        .reset-button {
+            margin-top: 30px;
+            padding: 12px 36px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff5733;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 40px; color: #333; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Ping Pong Scoreboard</h1>
+    <div class="scoreboard">
+        <div class="team yellow">
+            <h2>Team Yellow</h2>
+            <div class="score" id="yellow-score">0</div>
+            <div class="sets" id="yellow-sets">Sets: 0</div>
+            <button class="add-button yellow" onclick="addScore('yellow')">Add Point</button>
+        </div>
+        <div class="team green">
+            <h2>Team Green</h2>
+            <div class="score" id="green-score">0</div>
+            <div class="sets" id="green-sets">Sets: 0</div>
+            <button class="add-button green" onclick="addScore('green')">Add Point</button>
+        </div>
+    </div>
+    <button class="reset-button" onclick="resetScores()">Reset</button>
+
+    <script>
+        const scores = {
+            yellow: 0,
+            green: 0
+        };
+
+        const sets = {
+            yellow: 0,
+            green: 0
+        };
+
+        const winningSets = 3;
+
+        function addScore(team) {
+            scores[team]++;
+            document.getElementById(`${team}-score`).innerText = scores[team];
+
+            if (scores[team] >= 15) {
+                scores[team] = 0;
+                addSet(team);
+            }
+        }
+
+        function addSet(team) {
+            sets[team]++;
+            document.getElementById(`${team}-sets`).innerText = `Sets: ${sets[team]}`;
+
+            if (sets[team] >= winningSets) {
+                alert(`${team.charAt(0).toUpperCase() + team.slice(1)} wins the match!`);
+                resetScores();
+            }
+        }
+
+        function resetScores() {
+            scores.yellow = 0;
+            scores.green = 0;
+            sets.yellow = 0;
+            sets.green = 0;
+            document.getElementById('yellow-score').innerText = scores.yellow;
+            document.getElementById('green-score').innerText = scores.green;
+            document.getElementById('yellow-sets').innerText = `Sets: ${sets.yellow}`;
+            document.getElementById('green-sets').innerText = `Sets: ${sets.green}`;
+        }
+    </script>
+</body>
+</html>
